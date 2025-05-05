@@ -14,7 +14,9 @@ export const GenreCarousel = () => {
   const [carousel, setCarousel] = useState([]);
   const getCarouselMovies = async () => {
     try {
-      const { data } = await axios.get("http://localhost:8080/category");
+      const { data } = await axios.get(
+        `${process.env.NEXT_PUBLIC_BACKEND_ENDPOINT}/category`
+      );
       setCarousel(data.categories);
     } catch (err: any) {
       console.log(err.message);
@@ -32,7 +34,7 @@ export const GenreCarousel = () => {
               return (
                 <button
                   key={index}
-                  className="py-1 px-5 text-[18px] rounded-full bg-white hover:bg-gray-800"
+                  className="py-1 px-5 text-[18px] rounded-full bg-white hover:bg-gray-500"
                 >
                   {value.name}
                 </button>

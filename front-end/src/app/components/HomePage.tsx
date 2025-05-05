@@ -16,7 +16,7 @@ export const HomePage = () => {
   const getCarouselMovies = async () => {
     try {
       const { data } = await axios.get(
-        "http://localhost:8080/food/foodbyCategory"
+        `${process.env.NEXT_PUBLIC_BACKEND_ENDPOINT}/foodbyCategory`
       );
       setFoods(data.food);
     } catch (err: any) {
