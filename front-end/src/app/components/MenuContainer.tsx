@@ -21,7 +21,7 @@ export const MenuContainer = ({
 }) => {
   const handleClick = (value: any) => {
     const card = JSON.parse(localStorage.getItem("foods") || "[]");
-    const findEl = card.findIndex((val) => val._id === value._id);
+    const findEl = card.findIndex((val: any) => val._id === value._id);
     let updated;
     if (findEl !== -1) {
       card[findEl].quantity += 1;
