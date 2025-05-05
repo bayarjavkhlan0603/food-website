@@ -1,0 +1,61 @@
+"use client";
+
+import axios from "axios";
+import { ChevronLeft } from "lucide-react";
+import React, { useRef } from "react";
+
+export const Login = () => {
+  const emailRef = useRef();
+  const passwordRef = useRef();
+
+  const handleOnClick = async () => {
+    const response = await axios.post("http//localhost:8080/login", {
+      email: emailRef.current.value,
+      password: passwordRef.current.value,
+    });
+    localStorage.setItem("token", response.data.token);
+    console.log(response, "response");
+  };
+
+  return (
+    <div className="w-104 flex flex-col gap-6">
+      <div className="border border-[#E4E4E7] py-2 px-2 rounded-md flex justify-center items-center w-[36px] h-[36px]">
+        <ChevronLeft className="w-4 h-4 text-[#18181B]" />
+      </div>
+
+      <div>
+        <p className="text-2xl text-black font-semibold">Log in</p>
+        <p className="text-[16px] text-[#71717A]">
+          Log in to enjoy your favorite dishes.
+        </p>
+      </div>
+      <div className="flex flex-col gap-4">
+        <input
+          ref={emailRef}
+          type="email"
+          placeholder="Enter your email address"
+          className="border border-[#E4E4E7] w-full text-[#71717A] text-[14px] py-2 px-3 rounded-md"
+        />
+        <input
+          ref={passwordRef}
+          type="password"
+          placeholder="Passwords"
+          className="border border-[#E4E4E7] w-full text-[#71717A] text-[14px] py-2 px-3 rounded-md"
+        />
+        <a href="" className="text-[14px] text-black">
+          Forgot password ?
+        </a>
+      </div>
+      <button
+        onClick={handleOnClick}
+        className="bg-black h-[36px] px-8 text-[14px] rounded-md text-white"
+      >
+        Let's Go
+      </button>
+      <button className="flex justify-center gap-3">
+        <p className="text-[#71717A]">Don't have an account?</p>
+        <p className="text-[#2563EB]">Sign up </p>
+      </button>
+    </div>
+  );
+};
