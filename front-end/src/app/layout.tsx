@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
+import { Provider as TooltipProvider } from "@radix-ui/react-tooltip";
 import { Geist, Geist_Mono } from "next/font/google";
+import { CartProvider } from "@/lib/cart-context"; // 👈 нэмнэ
+
 import "./globals.css";
 
 const geistSans = Geist({
@@ -27,7 +30,11 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        {/* CartProvider-оор бүх children-ээ орооно */}
+        <CartProvider>
+          {/* TooltipProvider-г мөн хадгална */}
+          <TooltipProvider>{children}</TooltipProvider>
+        </CartProvider>
       </body>
     </html>
   );

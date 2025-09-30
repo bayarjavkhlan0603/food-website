@@ -31,7 +31,7 @@ export const OrderDetail = () => {
       <div className="text-[#FAFAFA] flex gap-3">
         <ShoppingCart className="w-6 h-6 font-semibold" />
 
-        <div className="text-[20px] font-semibold">Order detail</div>
+        <p className="text-[20px] font-semibold">Order detail</p>
       </div>
       <div>
         <Tabs className="flex flex-col gap-6" defaultValue="order">
@@ -49,17 +49,7 @@ export const OrderDetail = () => {
               <div className="flex flex-col gap-5">
                 <CardTitle>My cart</CardTitle>
                 <CardDescription className="flex flex-col gap-5">
-                  {food &&
-                    food?.map((el: any) => {
-                      return (
-                        <OrderCart
-                          foodImage={el.image}
-                          foodName={el.name}
-                          foodIngredients={el.ingredients}
-                          foodPrice={el.price}
-                        />
-                      );
-                    })}
+                  <OrderCart />
 
                   <div></div>
                   <div>

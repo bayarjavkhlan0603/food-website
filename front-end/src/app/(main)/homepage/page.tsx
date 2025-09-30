@@ -1,7 +1,7 @@
-import { HomePage } from "@/app/components/HomePage";
+import { Homepage } from "@/app/components/HomePage";
 import React from "react";
 
 const Home = () => {
-  return <HomePage />;
+  return <Homepage />;
 };
 export default Home;

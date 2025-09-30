@@ -2,27 +2,17 @@ import { DialogClose } from "@radix-ui/react-dialog";
 import { Minus, Plus, X } from "lucide-react";
 import { useState } from "react";
 
-export const OrderCart = ({
-  foodImage,
-  foodName,
-  foodIngredients,
-  foodPrice,
-}: {
-  foodImage: string;
-  foodName: string;
-  foodIngredients: string;
-  foodPrice: string;
-}) => {
+export const OrderCart = () => {
   return (
     <div className="w-full h-30 flex gap-[10px]">
       <div>
-        <img className="h-full w-40 object-cover rounded-xl" src={foodImage} />
+        <img className="h-full w-40 object-cover rounded-xl" src="" />
       </div>
       <div className="flex flex-col justify-between">
         <div className="flex justify-between items-center">
           <div>
-            <p className="text-[16px] font-bold text-[#EF4444]">{foodName}</p>
-            <p className="text-[12px]">{foodIngredients}</p>
+            <p className="text-[16px] font-bold text-[#EF4444]">{}</p>
+            <p className="text-[12px]">{}</p>
           </div>
 
           <button className="p-2 border border-[#EF4444] rounded-[9999px] ">
@@ -39,7 +29,7 @@ export const OrderCart = ({
               <Plus className="w-4 h-4" />
             </button>
           </div>
-          <p className="text-[16px] font-bold ">${foodPrice}</p>
+          <p className="text-[16px] font-bold ">${}</p>
         </div>
       </div>
     </div>

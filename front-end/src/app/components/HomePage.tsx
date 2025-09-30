@@ -1,53 +1,199 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { GenreCarousel } from "./GenreCarousel";
-import { MenuContainer } from "./MenuContainer";
-import axios from "axios";
+import { useState, useRef } from "react";
+import { Header } from "./Header";
+import { HeroSection } from "./HeroSection";
+import { CategoryNav } from "./CategoryNavbar";
+import { FoodItemDialog } from "./FoodItemDialog";
+import { FoodCard } from "./FoodCard";
 
-type food = {
-  name: string;
-  _id: string;
-  foods: string;
+const categories = [
+  "Appetizers",
+  "Soups",
+  "Pizza",
+  "Sandwiches",
+  "Hot Sides",
+  "Hot Sub Subs",
+  "Salads",
+  "Drinks",
+  "Desserts",
+];
+
+const menuItems = {
+  Appetizers: [
+    {
+      id: 1,
+      name: "Finger food",
+      price: "$5.99",
+      description: "Crispy finger foods perfect for sharing",
+      image: "/finger-food-appetizers.jpg",
+    },
+    {
+      id: 2,
+      name: "Beef Carpaccio Appetizer",
+      price: "$9.99",
+      description: "Thinly sliced beef with capers and parmesan",
+      image: "/beef-carpaccio.png",
+    },
+    {
+      id: 3,
+      name: "Sunshine Stackers",
+      price: "$12.99",
+      description: "Layered appetizer with fresh ingredients",
+      image: "/sunshine-stackers-appetizer.jpg",
+    },
+    {
+      id: 4,
+      name: "Beef Carpaccio Appetizer",
+      price: "$9.99",
+      description: "Thinly sliced beef with capers and parmesan",
+      image: "/beef-carpaccio-plate.jpg",
+    },
+    {
+      id: 5,
+      name: "Sunshine Stackers",
+      price: "$12.99",
+      description: "Layered appetizer with fresh ingredients",
+      image: "/sunshine-stackers-dish.jpg",
+    },
+    {
+      id: 6,
+      name: "Grilled Chicken",
+      price: "$9.99",
+      description: "Perfectly grilled chicken breast",
+      image: "/grilled-chicken-appetizer.jpg",
+    },
+  ],
+  Salads: [
+    {
+      id: 7,
+      name: "Grilled Chicken salad salad",
+      price: "$7.99",
+      description: "Fresh greens with grilled chicken",
+      image: "/grilled-chicken-salad.png",
+    },
+    {
+      id: 8,
+      name: "Burrata Caprese",
+      price: "$21.99",
+      description: "Fresh burrata with tomatoes and basil",
+      image: "/burrata-caprese-salad.jpg",
+    },
+    {
+      id: 9,
+      name: "Beetroot and orange salad",
+      price: "$3.99",
+      description: "Refreshing beetroot and orange combination",
+      image: "/beetroot-orange-salad.jpg",
+    },
+  ],
+  "Lunch Favorites": [
+    {
+      id: 10,
+      name: "Sunshine Stackers",
+      price: "$12.99",
+      description: "Our signature stacked lunch special",
+      image: "/sunshine-stackers-lunch.jpg",
+    },
+    {
+      id: 11,
+      name: "Sunshine Stackers",
+      price: "$15.99",
+      description: "Premium version with extra toppings",
+      image: "/premium-sunshine-stackers.jpg",
+    },
+    {
+      id: 12,
+      name: "Sunshine Stackers",
+      price: "$12.99",
+      description: "Classic preparation with fresh ingredients",
+      image: "/classic-sunshine-stackers.jpg",
+    },
+    {
+      id: 13,
+      name: "Sunshine Stackers",
+      price: "$12.99",
+      description: "Healthy option with extra vegetables",
+      image: "/healthy-sunshine-stackers.jpg",
+    },
+    {
+      id: 14,
+      name: "Sunshine Stackers",
+      price: "$13.99",
+      description: "Spicy variant with jalapeños",
+      image: "/spicy-sunshine-stackers.jpg",
+    },
+  ],
 };
 
-export const HomePage = () => {
-  const [foods, setFoods] = useState<food[]>();
-  const getCarouselMovies = async () => {
-    try {
-      const { data } = await axios.get(
-        `${process.env.NEXT_PUBLIC_BACKEND_ENDPOINT}/foodbyCategory`
-      );
-      setFoods(data.food);
-    } catch (err: any) {
-      console.log(err.message);
+interface FoodItem {
+  id: number;
+  name: string;
+  price: string;
+  description: string;
+  image: string;
+}
+
+export function Homepage() {
+  const [activeCategory, setActiveCategory] = useState("Appetizers");
+  const sectionRefs = useRef<{ [key: string]: HTMLElement | null }>({});
+  const [selectedItem, setSelectedItem] = useState<FoodItem | null>(null);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  const scrollToSection = (category: string) => {
+    setActiveCategory(category);
+    const element = sectionRefs.current[category];
+    if (element) {
+      element.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
     }
   };
-  useEffect(() => {
-    getCarouselMovies();
-  }, []);
 
-  console.log(foods);
+  const handleAddClick = (item: FoodItem) => {
+    setSelectedItem(item);
+    setIsDialogOpen(true);
+  };
+
   return (
-    <div className="bg-[#404040]">
-      <div>
-        <img src="https://s3-alpha-sig.figma.com/img/8984/6312/a2a7c22f5fe9122b2bd6276cdd549c3e?Expires=1745798400&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=ZT8ix8PnvS5PNCzC9Xqfe8g8T2DgO7M5SL~Xr0wI2LjCQqEDVh0ErkR4plCjukQZu4NWzuG3uAlO3IiW~xj2TXJzkTt1hAsTXfb9fM~kZzBq1ovNXX-oiElqqZiRHq2iIuq3o1xOTwmqXwtHN-rGlsh0xYvc6POiPqbmE2FFeRw0zMovo8AeroEmkEa-HRDjTUURjnZtd-cbGpkL-fnOqf1pNGbT2Hk2iepnd9Qfu~uFj7-0PiEL-bgc7yLhrRHOgNH0UFIwABTkhSqyQrPmB9nrvjtByLDhc725MYKkRofHdYQAIhYPwIwuB4oCQwHbbZ8VAw2hyJl5AXZbdjAJiA__" />
+    <div className="min-h-screen bg-gray-700">
+      <Header />
+      <HeroSection />
+      <CategoryNav
+        categories={categories}
+        activeCategory={activeCategory}
+        onCategoryClick={scrollToSection}
+      />
+
+      <div className="px-6 py-6">
+        {Object.entries(menuItems).map(([category, items]) => (
+          <section
+            key={category}
+            ref={(el) => {
+              sectionRefs.current[category] = el;
+            }}
+            className="mb-12"
+          >
+            <h3 className="text-white text-xl font-medium mb-6">{category}</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {items.map((item) => (
+                <FoodCard
+                  key={item.id}
+                  item={item}
+                  onAddClick={handleAddClick}
+                />
+              ))}
+            </div>
+          </section>
+        ))}
       </div>
-      <div className="flex flex-col gap-9 py-8 px-12 ">
-        <div className="text-[30px] text-white font-semibold pl-10">
-          Categories
-        </div>
-        <GenreCarousel />
-      </div>
-      {foods?.map((el) => {
-        return (
-          <MenuContainer
-            key={el._id}
-            foodCategories={el.name}
-            foods={el.foods}
-          />
-        );
-      })}
+
+      <FoodItemDialog
+        item={selectedItem}
+        open={isDialogOpen}
+        onOpenChange={setIsDialogOpen}
+      />
     </div>
   );
-};
+}

@@ -1,35 +1,34 @@
-import { LayoutDashboard, Settings, Truck } from "lucide-react";
+import { Package, Settings, Menu, Grid3X3 } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
-export const Navigation = () => {
+export function Navigation() {
   return (
-    <div className="py-[36px] px-5 flex flex-col gap-10">
-      <div className="flex items-center gap-2">
-        <img src="logo.svg" />
-        <div>
-          <p className="text-[18px] font-semibold">NomNom</p>
-          <p className="text-[12px] text-[#71717A]">Swift delivery</p>
-        </div>
-      </div>
-      <div className="flex flex-col gap-6">
-        <button className="flex gap-[10px] bg-black py-2 px-6 rounded-[9999px] text-white text-[14px]">
-          <p>
-            <LayoutDashboard className="w-[22px] h-[22px]" />
-          </p>
-          <p>Food menu</p>
-        </button>
-        <button className="flex gap-[10px] bg-black py-2 px-6 rounded-[9999px] text-white text-[14px]">
-          <p>
-            <Truck className="w-[22px] h-[22px]" />
-          </p>
-          <p>Orders</p>
-        </button>
-        <button className="flex gap-[10px] bg-black py-2 px-6 rounded-[9999px] text-white text-[14px]">
-          <p>
-            <Settings className="w-[22px] h-[22px]" />
-          </p>
-          <p>Settings</p>
-        </button>
+    <div className="text-white">
+      <div className="p-6">
+        <nav className="space-y-2">
+          <Button
+            variant="ghost"
+            className="w-full justify-start text-gray-400 hover:text-white hover:bg-gray-800"
+          >
+            <Grid3X3 className="w-4 h-4 mr-2" />
+            Food menu
+          </Button>
+          <Button
+            variant="secondary"
+            className="w-full justify-start bg-gray-800 text-white hover:bg-gray-700"
+          >
+            <Package className="w-5 h-5 mr-3" />
+            Orders
+          </Button>
+          <Button
+            variant="ghost"
+            className="w-full justify-start text-gray-400 hover:text-white hover:bg-gray-800"
+          >
+            <Settings className="w-5 h-5 mr-3" />
+            Settings
+          </Button>
+        </nav>
       </div>
     </div>
   );
-};
+}
